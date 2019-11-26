@@ -55,7 +55,7 @@ class VideoPlayer(QWidget):
         b = announcements.announcements[1][1]
         # Announcements body
         self.lbAnnounce = QLabel()
-        self.lbAnnounce.setText('\n'+h+'\n\n'+b)
+        self.lbAnnounce.setText(h+'\n\n'+b)
         self.lbAnnounce.setFont(fnt)
         self.lbAnnounce.setAlignment(Qt.AlignTop)
         self.lbAnnounce.setWordWrap(True)
@@ -91,7 +91,7 @@ class VideoPlayer(QWidget):
                 try:
                     h = announcements.announcements[i][0]
                     b = announcements.announcements[i][j] # At present this is only listing the first non-title item in the annoucement lists
-                    ann = '\n' + h + '\n\n' + b
+                    ann = h + '\n\n' + b
                     print("Successfully updated announcement from index "+str(i))
                     error = False
                 except:
@@ -101,14 +101,20 @@ class VideoPlayer(QWidget):
             self.lbAnnounce.setText(ann)
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(handler)
-        self.timer.start(4000)
+        self.timer.start(2000)
 
         # Do the layout move to do the layout move
         self.grid = QGridLayout()
-        self.grid.addWidget(self.video, 0, 0, 9, 6)
-        self.grid.addWidget(self.lbAnnounce, 9, 1, 5, 4)
-        self.grid.addWidget(self.lbDay, 0, 6)
-        self.grid.addWidget(self.lbGrad, 1, 6)
+        w = 4
+        h = 3
+        wl = 2
+        wr = w-wl
+        ht = 1
+        hb = h-ht
+        self.grid.addWidget(self.lbDay, 0, 0, ht, wl)
+        self.grid.addWidget(self.lbGrad, ht, 0, hb, wl)
+        self.grid.addWidget(self.video, 0, wl, ht, wr)
+        self.grid.addWidget(self.lbAnnounce, ht, wl, hb, wr)
 
         self.setLayout(self.grid)
 
